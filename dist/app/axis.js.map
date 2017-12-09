@@ -1,0 +1,1 @@
+{"version":3,"sources":["../../app/axis.js"],"names":["createAxis"],"mappings":";;AAEA;;AAEA,IAAMA,aAAa,SAAbA,UAAa,GAAM,CAExB,CAFD,C,CAJA","file":"axis.js","sourcesContent":["// axis.js\n\nimport { axis } from 'd3-axis';\n\nconst createAxis = () => {\n\n};\n"]}
