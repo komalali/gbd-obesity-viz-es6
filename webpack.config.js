@@ -5,6 +5,9 @@ module.exports = {
   output: {
     filename: 'bundle.js',
   },
+  node: {
+    fs: 'empty',
+  },
   module: {
     loaders: [
       {

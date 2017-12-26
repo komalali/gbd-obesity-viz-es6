@@ -1,10 +1,9 @@
 // main.js
-import { select } from 'd3-selection';
 
-const app = (name) => {
-  select('body')
-    .append('h1')
-    .text(`Hello, ${name}!`);
-};
+import createInfoDiv from './components/InfoDiv';
+import createButtonToolbar from './components/Toolbar';
+import drawChart from './components/Chart';
 
-app('Komal');
+createInfoDiv('Nigeria');
+createButtonToolbar();
+drawChart();
