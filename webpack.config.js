@@ -21,6 +21,12 @@ module.exports = {
         exclude: /node_modules/,
       },
     ],
+    rules: [
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader'],
+      },
+    ],
   },
   devServer: {
     port: 3000,

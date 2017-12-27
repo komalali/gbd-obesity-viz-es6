@@ -1,15 +1,31 @@
 // Toolbar.js
 
 import { select } from 'd3-selection';
-import { getSuperRegions } from './Data';
+import getData from './Data';
 
-export default function createButtonToolbar() {
-  getSuperRegions().then((superRegions) => {
-    select('#buttonToolbar')
-      .selectAll('button')
-      .data(superRegions)
-      .enter()
-      .append('button')
-      .text(superRegion => superRegion);
+function createButtonToolbar(data) {
+  select('#buttonToolbar')
+    .selectAll('button')
+    .data(data.superRegions)
+    .enter()
+    .append('button')
+    .text(superRegion => superRegion);
+}
+
+function createDropdown(data) {
+  select('#countryDropdown')
+    .selectAll('#countryOption')
+    .data(data.countries)
+    .enter()
+    .append('option')
+    .attr('id', 'countryOption')
+    .text(country => country)
+    .attr('value', country => country);
+}
+
+export default function createToolbar() {
+  getData().then((data) => {
+    createButtonToolbar(data);
+    createDropdown(data);
   });
 }

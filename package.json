@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "webpack-dev-server"
+    "build": "webpack",
+    "start": "webpack-dev-server"
   },
   "author": "Komal Ali",
   "license": "ISC",
@@ -15,11 +16,13 @@
     "babel-loader": "^7.1.2",
     "babel-preset-env": "^1.6.1",
     "chai": "^4.1.2",
+    "css-loader": "^0.28.7",
     "eslint": "^4.12.1",
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-loader": "^1.9.0",
     "eslint-plugin-import": "^2.8.0",
     "mocha": "^4.0.1",
+    "style-loader": "^0.19.1",
     "webpack": "^3.9.1",
     "webpack-dev-server": "^2.9.5"
   },
@@ -36,9 +39,6 @@
     "d3-scale": "^1.0.7",
     "d3-selection": "^1.2.0",
     "d3-shape": "^1.2.0",
-    "d3-transition": "^1.1.1",
-    "fs": "0.0.1-security",
-    "util": "^0.10.3",
-    "util.promisify": "^1.0.0"
+    "d3-transition": "^1.1.1"
   }
 }

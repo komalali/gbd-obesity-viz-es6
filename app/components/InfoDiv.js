@@ -5,9 +5,10 @@ import getData from './Data';
 
 export default function createInfoDiv(countryName) {
   getData().then((data) => {
-    const blurb = data[countryName].blurb();
+    const blurb = data.countryObjects[countryName].blurb();
     const div = select('#countryInfo');
 
+    div.html('');
     div.append('h1')
       .text(blurb[0]);
     div.append('p')

@@ -1,8 +1,15 @@
 // Chart.js
 
 import { select } from 'd3-selection';
-import config from './Config';
-import createAxes from './Axis';
+import { config, xScale, yScale } from './Constants';
+import drawAxes from './Axis';
+import drawLines from './Lines';
+import getData from './Data';
+
+function createScales(data) {
+  xScale.domain(data.yearsMinMax);
+  yScale.domain([0, data.meanMax]);
+}
 
 function createSVG() {
   return select('#chart')
@@ -16,5 +23,10 @@ function createSVG() {
 
 export default function drawChart() {
   createSVG();
-  createAxes();
+
+  getData().then((data) => {
+    createScales(data);
+    drawLines(data);
+    drawAxes();
+  });
 }

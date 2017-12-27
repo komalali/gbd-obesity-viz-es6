@@ -1,48 +1,49 @@
 // Axis.js
 
 import { axisBottom, axisLeft, axisRight } from 'd3-axis';
-import { scaleLinear } from 'd3-scale';
-import { select } from 'd3-selection';
 import { format } from 'd3-format';
-import config from './Config';
-import getData from './Data';
+import { select } from 'd3-selection';
+import { xScale, yScale, config } from './Constants';
+import '../css/Axis.css';
 
 export default function createAxes() {
+  const chart = select('#chart-content');
   const yearFormat = format('d');
   const percentFormat = format('.0%');
 
-  const x = scaleLinear().nice()
-    .range([0, config.adjustedWidth]);
-  const y = scaleLinear().nice()
-    .range([config.adjustedHeight, 0]);
+  const xAxis = axisBottom(xScale).tickFormat(yearFormat);
+  const yAxisLeft = axisLeft(yScale).tickFormat(percentFormat);
+  const yAxisRight = axisRight(yScale).tickFormat(percentFormat);
 
-  const xAxis = axisBottom(x).tickFormat(yearFormat);
-  const yAxisLeft = axisLeft(y).tickFormat(percentFormat);
-  const yAxisRight = axisRight(y).tickFormat(percentFormat);
+  // x-axis
+  chart.append('g')
+    .classed('axis', true)
+    .attr('id', 'x-axis')
+    .attr('transform', `translate(0,${config.adjustedHeight})`)
+    .call(xAxis);
 
-  getData().then(() => {
-    const xDomain = [1990, 2013];
-    const yDomain = [0, 0.7];
+  // y-axis left
+  chart.append('g')
+    .classed('axis', true)
+    .attr('id', 'y-axis-left')
+    .call(yAxisLeft);
 
-    x.domain(xDomain);
-    y.domain(yDomain);
+  // yScale-axis right
+  chart.append('g')
+    .classed('axis', true)
+    .attr('id', 'y-axis-right')
+    .attr('transform', `translate(${config.adjustedWidth},0)`)
+    .call(yAxisRight);
 
-    const chart = select('#chart-content');
+  // x-axis title
+  chart.append('text')
+    .classed('axis-text', true)
+    .attr('transform', `translate(-${config.margin.left},${config.adjustedHeight / 2})rotate(-90)`)
+    .text('% Population that is Obese (BMI > 30)');
 
-    chart.append('g')
-      .classed('x-axis', true)
-      .attr('transform', `translate(0,${config.adjustedHeight})`)
-      .call(xAxis);
-
-    // y-axis left
-    chart.append('g')
-      .classed('y-axis-left', true)
-      .call(yAxisLeft);
-
-    // y-axis right
-    chart.append('g')
-      .classed('y-axis-right', true)
-      .attr('transform', `translate(${config.adjustedWidth},0)`)
-      .call(yAxisRight);
-  });
+  // y-axis title
+  chart.append('text')
+    .classed('axis-text', true)
+    .attr('transform', `translate(${config.adjustedWidth / 2},${config.adjustedHeight + config.margin.bottom})`)
+    .text('Year');
 }
