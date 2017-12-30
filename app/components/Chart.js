@@ -1,15 +1,10 @@
 // Chart.js
 
 import { select } from 'd3-selection';
-import { config, xScale, yScale } from './Constants';
+import config from './Constants';
 import drawAxes from './Axis';
 import drawLines from './Lines';
-import getData from './Data';
-
-function createScales(data) {
-  xScale.domain(data.yearsMinMax);
-  yScale.domain([0, data.meanMax]);
-}
+import createScales from './Scales';
 
 function createSVG() {
   return select('#chart')
@@ -21,12 +16,12 @@ function createSVG() {
     .attr('transform', `translate(${config.margin.left * 1.5},${config.margin.top})`);
 }
 
-export default function drawChart() {
-  createSVG();
-
-  getData().then((data) => {
-    createScales(data);
-    drawLines(data);
-    drawAxes();
-  });
+export default function drawChart(activeLocations) {
+  const currentSVG = select('svg');
+  if (currentSVG.size() === 0) {
+    createSVG();
+  }
+  createScales(activeLocations);
+  drawLines(activeLocations);
+  drawAxes();
 }

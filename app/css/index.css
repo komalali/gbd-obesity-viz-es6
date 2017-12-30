@@ -1,0 +1,22 @@
+/* index.css */
+
+body {
+    font-family: 'Open Sans', sans-serif;
+}
+
+div {
+    margin: 5px 0;
+}
+
+h1 {
+    margin: 5px 0;
+}
+
+p {
+    font-size: 12px;
+    margin: 2px;
+}
+
+label {
+    font-size: 12px;
+}

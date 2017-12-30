@@ -6,21 +6,24 @@
 <head>
   <meta charset="UTF-8">
   <title>Obesity Viz</title>
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet">
+  <link href="app/css/index.css" rel="stylesheet">
 </head>
 
 <body>
   <div id="countryInfo">
     <h1>Obesity is on the rise globally.</h1>
-    <p>Between 1990 and 2013, the global prevalence of obesity (defined as the percentage of the population with a BMI > 30) rose from 9.3% to 12.0%, a relative increase of 29%.</p>
+    <p>Between 1980 and 2016, the global prevalence of obesity (defined as the percentage of the population with a BMI > 30) rose from <span>5.2%</span> to <span>14.0%</span>, a relative increase of <span>269%!</span></p>
     <p>High BMI is associated with a huge variety of health problems, ranging from heart disease to diabetes to various forms of cancer.</p>
     <p>To highlight all countries in a super region, click the buttons below and for country-specific information, hover over the lines in the graph or use the dropdown list.</p>
   </div>
   <div id="toolbar">
     <div id="buttonToolbar"></div>
     <div id="dropDown">
-        <select title="country-dropdown" id="countryDropdown" multiple>
-            <option value="" disabled selected>Pick a country</option>
-        </select>
+      <label for="countryDropdown">
+        Select countries from the dropdown to plot them on the graph <br />
+        <select class="countrySelect" id="countryDropdown" name="locations[]" multiple="multiple"></select>
+      </label>
     </div>
   </div>
   <div id="chart"></div>

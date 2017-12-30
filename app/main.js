@@ -1,9 +1,11 @@
 // main.js
 
-import createInfoDiv from './components/InfoDiv';
 import createToolbar from './components/Toolbar';
 import drawChart from './components/Chart';
+import getData from './components/Data';
 
-createInfoDiv('Nigeria');
-createToolbar();
-drawChart();
+getData().then((data) => {
+  createToolbar(data);
+  drawChart([data.globalObject]);
+});
+

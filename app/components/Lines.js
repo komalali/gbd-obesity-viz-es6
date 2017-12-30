@@ -1,23 +1,52 @@
 // Lines.js
 
-import { line, curveNatural } from 'd3-shape';
-import { select } from 'd3-selection';
-import { xScale, yScale } from './Constants';
+import { transition } from 'd3-transition';
+import { line, curveBasis } from 'd3-shape';
+import { select, selectAll } from 'd3-selection';
+import { xScale, yScale, colorScale } from './Scales';
 import '../css/Lines.css';
 
 const timeTrend = line()
   .x(datum => xScale(datum.year))
   .y(datum => yScale(datum.mean))
-  .curve(curveNatural);
+  .curve(curveBasis);
 
-export default function drawLines(data) {
+function drawLine(location) {
   const chart = select('#chart-content');
+  const lineColor = colorScale(location.superRegion);
+  const t = transition()
+    .duration(750);
+  const currentLine = select(`[data="${location.name}"`);
 
-  Object.entries(data.countryObjects)
-    .forEach((country) => {
-      const countryData = country[1];
-      chart.append('path')
-        .classed('line', true)
-        .attr('d', timeTrend(countryData.dataPoints));
-    });
+  if (currentLine.size() > 0) {
+    currentLine
+      .transition(t)
+      .attr('d', timeTrend(location.dataPoints));
+  } else {
+    chart
+      .append('path')
+      .classed('line', true)
+      .attr('data', location.name)
+      .attr('d', timeTrend(location.dataPoints))
+      .style('stroke', lineColor);
+  }
+}
+
+function remove(array, item) {
+  const itemIndex = array.indexOf(item);
+  array.splice(itemIndex, 1);
+}
+
+export default function drawLines(locationList) {
+  let allCurrentLines = selectAll('.line').nodes();
+  allCurrentLines = allCurrentLines.map(countryLine => select(countryLine).attr('data'));
+  locationList.forEach((location) => {
+    drawLine(location);
+    remove(allCurrentLines, location.name);
+  });
+  console.log(allCurrentLines);
+  allCurrentLines.forEach((location) => {
+    select(`[data="${location}"]`).remove();
+  });
+  console.log(allCurrentLines);
 }

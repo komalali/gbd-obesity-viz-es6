@@ -7,11 +7,11 @@ const round = format('.1f');
 const rankPhrasing = (earlyYearRank, lateYearRank) => {
   switch (true) {
     case lateYearRank > earlyYearRank:
-      return `(down from #${earlyYearRank} in 1990)`;
+      return `(down from #${earlyYearRank} in 1980)`;
     case lateYearRank < earlyYearRank:
-      return `(up from #${earlyYearRank} in 1990)`;
+      return `(up from #${earlyYearRank} in 1980)`;
     default:
-      return '(same rank as in 1990)';
+      return '(same rank as in 1980)';
   }
 };
 
@@ -40,7 +40,7 @@ export class DataPoint {
   }
 }
 
-export class Country {
+export class Location {
   constructor(name, iso3, region, superRegion) {
     this._name = name;
     this._iso3 = iso3;
@@ -74,31 +74,31 @@ export class Country {
   }
 
   relativeChangeText() {
-    const mean2013 = this.dataPoints[5].mean;
-    const mean1990 = this.dataPoints[0].mean;
-    const relativeChange = round(((mean2013 - mean1990) * 100) / mean1990);
-    const changeDirection = mean2013 > mean1990 ? 'increased' : 'decreased';
+    const mean2016 = this.dataPoints[36].mean;
+    const mean1980 = this.dataPoints[0].mean;
+    const relativeChange = round(((mean2016 - mean1980) * 100) / mean1980);
+    const changeDirection = mean2016 > mean1980 ? 'increased' : 'decreased';
 
-    return `In 1990, ${mean1990}% of the population of ${this.name} was obese. By 2013, this number had ${changeDirection} to ${mean2013}%, a relative change of ${relativeChange}%.`;
+    return `In 1980, ${mean1980 * 100}% of the population of ${this.name} was obese. By 2016, this number had ${changeDirection} to ${mean2016 * 100}%, a relative change of ${relativeChange}%.`;
   }
 
   differenceFromGlobalText() {
-    const percentDifferenceFromGlobal = round(this.dataPoints[5].mean - 12);
+    let percentDifferenceFromGlobal = round((this.dataPoints[36].mean - 0.14) * 100);
     const changeDirection = percentDifferenceFromGlobal > 0 ? 'higher' : 'lower';
     if (percentDifferenceFromGlobal < 0) {
-      Math.abs(percentDifferenceFromGlobal);
+      percentDifferenceFromGlobal = Math.abs(percentDifferenceFromGlobal);
     }
 
-    return `In 2013, ${this.name} had a prevalence of ${percentDifferenceFromGlobal}% ${changeDirection} than the global average of 12%.`;
+    return `In 2016, ${this.name} had a prevalence of ${percentDifferenceFromGlobal}% ${changeDirection} than the global average of 14%.`;
   }
 
   rankChangeText() {
-    const globalRank1990 = this.dataPoints[0].globalRank;
-    const globalRank2013 = this.dataPoints[5].globalRank;
-    const superRegionRank1990 = this.dataPoints[0].superRegionRank;
-    const superRegionRank2013 = this.dataPoints[5].superRegionRank;
+    const globalRank1980 = this.dataPoints[0].globalRank;
+    const globalRank2016 = this.dataPoints[36].globalRank;
+    const superRegionRank1980 = this.dataPoints[0].superRegionRank;
+    const superRegionRank2016 = this.dataPoints[36].superRegionRank;
 
-    return `In 2013, ${this.name} ranked in at #${globalRank2013} most obese country globally, ${rankPhrasing(globalRank1990, globalRank2013)}, and #${superRegionRank2013} in the ${this.superRegion} super region ${rankPhrasing(superRegionRank1990, superRegionRank2013)}.`;
+    return `In 2016, ${this.name} ranked in at #${globalRank2016} most obese country globally, ${rankPhrasing(globalRank1980, globalRank2016)}, and #${superRegionRank2016} in the ${this.superRegion} super region ${rankPhrasing(superRegionRank1980, superRegionRank2016)}.`;
   }
 
   blurb() {

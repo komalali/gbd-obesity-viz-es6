@@ -1,7 +1,7 @@
 /* Lines.css */
 
 .line {
-    stroke: lightgrey;
+    stroke: grey;
     stroke-width: 1px;
     fill: none;
 }
