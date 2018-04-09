@@ -4,11 +4,11 @@ import { max, min } from 'd3-array';
 import { scaleLinear, scaleOrdinal } from 'd3-scale';
 import config from './Constants';
 
-export const xScale = scaleLinear().nice().range([0, config.adjustedWidth]);
-export const yScale = scaleLinear().nice().range([config.adjustedHeight, 0]);
+export const xScale = scaleLinear().nice();
+export const yScale = scaleLinear().nice();
 export const colorScale = scaleOrdinal().range(config.colors);
 
-export default function createScales(locationList) {
+export default function (locationList) {
   const dataRanges = {
     yearsMin: Infinity,
     yearsMax: -Infinity,
@@ -29,6 +29,10 @@ export default function createScales(locationList) {
       dataRanges.meanMax = tempMeanMax;
     }
   });
-  xScale.domain([dataRanges.yearsMin, dataRanges.yearsMax]);
-  yScale.domain([0, dataRanges.meanMax + 0.02]);
+  xScale
+    .range([0, config.adjustedWidth])
+    .domain([dataRanges.yearsMin, dataRanges.yearsMax]);
+  yScale
+    .domain([0, dataRanges.meanMax + 0.02])
+    .range([config.adjustedHeight, 0]);
 }

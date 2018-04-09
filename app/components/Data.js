@@ -48,10 +48,9 @@ function createDataObject(data) {
       dataObject.countryObjects[datum.location_name].addDataPoint(point);
     }
   });
-
   return dataObject;
 }
 
-export default function getData() {
+export default function () {
   return csv('data/obesity_by_country_2016.csv').then(data => createDataObject(data));
 }

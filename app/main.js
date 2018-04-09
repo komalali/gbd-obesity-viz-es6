@@ -1,11 +1,14 @@
 // main.js
 
-import createToolbar from './components/Toolbar';
-import drawChart from './components/Chart';
-import getData from './components/Data';
+import $ from 'jquery';
+import { getData, createToolbar, drawChart, redrawChart } from './components';
 
-getData().then((data) => {
+async function createPage() {
+  const data = await getData();
   createToolbar(data);
   drawChart([data.globalObject]);
-});
+}
 
+createPage();
+
+$(window).on('resize', redrawChart);

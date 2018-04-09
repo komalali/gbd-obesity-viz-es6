@@ -3,7 +3,7 @@
 import { transition } from 'd3-transition';
 import { line, curveBasis } from 'd3-shape';
 import { select, selectAll } from 'd3-selection';
-import { xScale, yScale, colorScale } from './Scales';
+import { xScale, yScale, colorScale } from '.';
 import '../css/Lines.css';
 
 const timeTrend = line()
@@ -28,6 +28,9 @@ function drawLine(location) {
       .classed('line', true)
       .attr('data', location.name)
       .attr('d', timeTrend(location.dataPoints))
+      .style('opacity', 0)
+      .transition(t)
+      .style('opacity', 0.7)
       .style('stroke', lineColor);
   }
 }
@@ -37,16 +40,14 @@ function remove(array, item) {
   array.splice(itemIndex, 1);
 }
 
-export default function drawLines(locationList) {
+export default function (locationList) {
   let allCurrentLines = selectAll('.line').nodes();
   allCurrentLines = allCurrentLines.map(countryLine => select(countryLine).attr('data'));
   locationList.forEach((location) => {
     drawLine(location);
     remove(allCurrentLines, location.name);
   });
-  console.log(allCurrentLines);
   allCurrentLines.forEach((location) => {
     select(`[data="${location}"]`).remove();
   });
-  console.log(allCurrentLines);
 }

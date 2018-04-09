@@ -4,8 +4,7 @@ import $ from 'jquery';
 import 'select2';
 import 'select2/dist/css/select2.css';
 import { select } from 'd3-selection';
-import { colorScale } from './Scales';
-import { ButtonToggle, redrawChart } from './EventHandlers';
+import { colorScale, buttonToggle, redrawChart } from '.';
 import '../css/Toolbar.css';
 
 function createButtonToolbar(data) {
@@ -14,7 +13,7 @@ function createButtonToolbar(data) {
       .append('button')
       .attr('data', superRegion)
       .text(superRegion)
-      .on('click', ButtonToggle);
+      .on('click', buttonToggle);
 
     button.style('background-color', 'white')
       .style('border', `1px solid ${colorScale(superRegion)}`)

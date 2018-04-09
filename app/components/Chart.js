@@ -1,10 +1,8 @@
 // Chart.js
 
-import { select } from 'd3-selection';
+import { select, selectAll } from 'd3-selection';
 import config from './Constants';
-import drawAxes from './Axis';
-import drawLines from './Lines';
-import createScales from './Scales';
+import { createScales, drawLines, drawAxes, showTooltip } from '.';
 
 function createSVG() {
   return select('#chart')
@@ -16,12 +14,19 @@ function createSVG() {
     .attr('transform', `translate(${config.margin.left * 1.5},${config.margin.top})`);
 }
 
-export default function drawChart(activeLocations) {
+export default function (activeLocations) {
   const currentSVG = select('svg');
   if (currentSVG.size() === 0) {
     createSVG();
+  } else {
+    currentSVG
+      .style('width', config.width)
+      .style('height', config.height);
   }
   createScales(activeLocations);
   drawLines(activeLocations);
   drawAxes();
+
+  selectAll('.line')
+    .on('mouseenter', showTooltip);
 }

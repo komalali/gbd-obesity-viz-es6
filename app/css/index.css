@@ -20,3 +20,11 @@ p {
 label {
     font-size: 12px;
 }
+
+div {
+    text-align: center;
+}
+
+#toolbar {
+    margin: 0 50px;
+}
